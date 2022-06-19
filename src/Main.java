@@ -1,3 +1,5 @@
+import java.math.BigInteger;
+import java.time.chrono.IsoEra;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Scanner;
@@ -19,9 +21,7 @@ public class Main   {
         System.out.println("is divisible by 6: "+isdiv6);
       boolean isdiv7= div7(num);
         System.out.println("is divisible by 7: "+isdiv7);
-
     }
-
     private static boolean div7(String num) {
         //1123
         //double 3
@@ -31,21 +31,37 @@ public class Main   {
         //2
         int count=2;
         ArrayList<String> numbers = new ArrayList<>();
-        for (int i = 0; i < num.length() ; i++) {
+        for (int i = 0; i < num.length(); i++) {
             numbers.add(String.valueOf(num.charAt(i)));
         }
-        while (numbers.size()>0)
-        {   if (num.length()<1)
-            return Integer.parseInt(num)%7==0;
-            int l2d= Integer.parseInt(String.valueOf(numbers.get(numbers.size()-1)));
-            l2d*=2;
-            numbers.remove(numbers.size());
-            String rem ="";
-            for (int i = 0; i < numbers.size() ; i++) {
-                rem+=Integer.parseInt(String.valueOf(numbers.get(i)));
+      //  System.out.println(numbers);
+        while (numbers.size()>0){
+         //   System.out.println(numbers);
+          int dbl1= Integer.parseInt( numbers.get(numbers.size()-1));
+            dbl1 *= 2;
+           BigInteger dbl=new BigInteger (String.valueOf(dbl1));
+          //  System.out.println("dbl"+dbl);
+            numbers.remove(numbers.size()-1);
+            num="";
+            for (int i = 0; i < numbers.size(); i++) {
+                num+=numbers.get(i);
             }
-            int value = Math.abs(Integer.parseInt(rem) - l2d);
-            if (value%7==0)
+          //  System.out.println(num);
+            BigInteger minus= new BigInteger(num);
+
+            BigInteger value = new BigInteger("0");
+            value = minus.subtract(dbl);
+
+            BigInteger absvalue = value.abs();
+            String num2 =absvalue.toString();
+            numbers=new ArrayList<>();
+            for (int i = 0; i < num2.length(); i++) {
+                numbers.add(String.valueOf(num2.charAt(i)));
+            }
+           // System.out.println("value "+absvalue);
+            BigInteger seven= new BigInteger("7");
+            BigInteger zer0= new BigInteger("0");
+            if (absvalue.mod(seven).equals(zer0)&&BigInteger.valueOf(Long.parseLong("99984")).compareTo(absvalue)>0)
                 return true;
         }
         return false;
