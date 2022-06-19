@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 public class Main   {
@@ -28,19 +30,23 @@ public class Main   {
         //10-12
         //2
         int count=2;
-        while (count<num.length()+2)
-        {
-          int num2double=Integer.parseInt( String.valueOf( num.charAt(num.length()-1)));
-          num2double*=2;
-          StringBuilder remaining= new StringBuilder();
-            for (int i = 0; i < num.length()-count; i++) {
-              remaining.append(String.valueOf(num.charAt(i)));
+        ArrayList<String> numbers = new ArrayList<>();
+        for (int i = 0; i < num.length() ; i++) {
+            numbers.add(String.valueOf(num.charAt(i)));
+        }
+        while (numbers.size()>0)
+        {   if (num.length()<1)
+            return Integer.parseInt(num)%7==0;
+            int l2d= Integer.parseInt(String.valueOf(numbers.get(numbers.size()-1)));
+            l2d*=2;
+            numbers.remove(numbers.size());
+            String rem ="";
+            for (int i = 0; i < numbers.size() ; i++) {
+                rem+=Integer.parseInt(String.valueOf(numbers.get(i)));
             }
-            int remvalue = Integer.parseInt(remaining.toString());
-            int value=Math.abs(remvalue-num2double);
-            if (value==7)
+            int value = Math.abs(Integer.parseInt(rem) - l2d);
+            if (value%7==0)
                 return true;
-            count++;
         }
         return false;
     }
